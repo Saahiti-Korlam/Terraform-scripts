@@ -1,0 +1,69 @@
+Terraform commands to use :
+
+To initiate and set up the terraform environment
+terraform init 
+
+To compare with real infrastructure and reviews the changes to be executed
+terrform plan
+
+To apply the changes 
+terraform apply
+
+To destroy or delete the applied changes
+terraform destroy
+
+To list the resources that were created
+terraform state list
+
+To skip the confirmation  and approve directly
+terraform apply -auto-approve
+terraform destroy -auto-approve
+
+To delete/apply only specific tagets---
+terraform destroy -target="aws_instance.web"
+
+To  target multi blocks
+terraform destroy -target="aws_instance.web" -target="aws_instance.aws_s3.storage"
+
+To format .tf file with correct indentations and spaces
+terraform fmt
+To format  within the subfolders
+terraform fmt -recursive
+
+To check diferences
+terraform fmt -check -diff
+
+To to check if format of the .tf file is valid or not
+terraform validate
+ 
+To restrore from the drift seen
+command : terraform plan -refresh-only
+
+===== enable debug/trace levl and export it to .log (powershell)=====
+$env TF_LOG="TRACE"
+$env TF_LOG_PATH = "terraform.log"
+-----enable debug/trace levl and export it to .log (mac/bash/linux)===
+export TF-LOG=DEBUG
+export TF_LOG_PATH="terraform.log"
+
+it will detach from local to s3 bucket : 
+cmd : terraform init -migrate-state
+      terraform apply -auto-approve
+
+create workspace for any environment
+eg for dev : terraform workspace new dev
+terraform apply -var-file="dev.tfvars" -auto-approve
+
+STEPS TO DESTROY WORKSPACE :
+--------------empty the resources inside the workspaces------------
+terraform destroy -var-file="prod.tfvars" -auto-approve
+
+-----------switch to other workspaces and delete the workspaces----------
+Note : if you are currently in dev workspace then switch to prod/web/default workspaces 
+
+terraform workspace select default
+terraform workspace delete dev
+
+
+
+
